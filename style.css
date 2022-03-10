@@ -1,12 +1,23 @@
 header {
-  margin: 100px 0 50px;
+  background: var(--cyan);
+  color: var(--white);
+  padding: var(--spacing-6) var(--spacing-0) var(--spacing-6);
   text-align: center;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style-type: none;
 }
 
 .banner {
   position: absolute;
   top: -10px;
-  left: 50px;
+  left: var(--spacing-4);
 }
 
 .banner:hover img {
@@ -14,10 +25,68 @@ header {
 }
 
 .banner img {
-  height: 150px;
+  height: 100px;
   transition: transform 0.1s;
 }
 
 .card {
   font-size: var(--font-3);
+}
+
+.blurb {
+  border: 2px dashed var(--border);
+  border-radius: var(--radii-default);
+  padding: var(--spacing-4);
+}
+
+.blurb p {
+  line-height: 1.75;
+}
+
+.container {
+  margin: var(--spacing-5) auto;
+}
+
+.no-repos {
+  color: var(--white);
+  font-style: italic;
+}
+
+.repos {
+  background: var(--muted);
+  padding: var(--spacing-4) 0;
+}
+
+.repos h2 {
+  margin-bottom: var(--spacing-5);
+}
+
+.repo {
+  margin-bottom: var(--spacing-4);
+}
+
+.issues-count, .lang {
+  float: right;
+  margin-right: var(--spacing-1);
+  top: 0;
+}
+
+.hidden {
+  display: none;
+}
+
+.highlight {
+  background-image: linear-gradient(-100deg,rgba(243,234,164,.33),rgba(243,234,164,.95),rgba(243,234,164,.1));
+}
+
+.no-styles-a {
+  color: inherit;
+  text-decoration: none;
+  text-underline-position: under;
+}
+
+.no-styles-a:hover {
+  color: var(--primary);
+  text-decoration: none;
+  text-underline-position: under;
 }
