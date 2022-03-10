@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>A curated list of open source issues</title>
+    <link rel="stylesheet" href="theme.css" />
+    <link rel="stylesheet" href="style.css" />
+
+    <meta property="og:title" content="A curated list of open source issues" />
+    <meta name="twitter:title" content="A curated list of open source issues" />
+    <meta name="description" content="A curated list of open source issues" />
+    <meta property="og:description" content="A curated list of open source issues" />
+    <meta name="twitter:description" content="A curated list of open source issues" />
+    <meta name="theme-color" content="#ec3750" />
+    <meta name="msapplication-TileColor" content="#ec3750" />
+  </head>
+
+  <body>
+    <a class="banner" href="https://hackclub.com/">
+      <img src="images/flag-orpheus-top.png" />
+    </a>
+    <header>
+      <h1 class="ultratitle">Open Source</h1>
+      <p class="headline">
+        A curated list of approachable
+        <a href="https://hackclub.com/">Hack Club</a>
+        open source issues available on
+        <a href="https://github.com/">GitHub</a>
+      </p>
+    </header>
+    <div class="container">
+      <div class="card">
+        <p>Open source blurb here</p>
+      </div>
+    </div>
+
+    <div style="padding-top: var(--spacing-4); padding-bottom: var(--spacing-4)">
+      <div class="container">
+        <div class="card sunken">
+          <div
+            style="
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: var(--spacing-3);
+            "
+          >
+            <label>
+              Full name
+              <input placeholder="Zach Latta" />
+            </label>
+            <label>
+              How are you primarily associated with Hack Club?
+              <select>
+                <option value="" disabled hidden>Select one…</option>
+                <option value="club-leader">I lead a club</option>
+                <option value="club-member">I am a club member</option>
+                <option value="slack-member">I am active on Slack</option>
+                <option value="alum">I am a Hack Club alum</option>
+                <option value="none">None of the above</option>
+              </select>
+            </label>
+            <label>
+              Why do you want to come?
+              <textarea placeholder="Write a few sentences..."></textarea>
+            </label>
+          </div>
+          <button style="margin-top: var(--spacing-3); width: 100%">
+            RSVP
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script src="script.js"></script>
+</html>

@@ -1,0 +1,23 @@
+header {
+  margin: 100px 0 50px;
+  text-align: center;
+}
+
+.banner {
+  position: absolute;
+  top: -10px;
+  left: 50px;
+}
+
+.banner:hover img {
+  transform: rotate(-0.01turn);
+}
+
+.banner img {
+  height: 150px;
+  transition: transform 0.1s;
+}
+
+.card {
+  font-size: var(--font-3);
+}
