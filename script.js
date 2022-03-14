@@ -19,14 +19,20 @@ window.addEventListener("DOMContentLoaded", (event) => {
               .href = repo["html_url"];
             repoEl.querySelector("[data-tag='name']")
               .innerText = repo["name"];
-            repoEl.querySelector("[data-tag='language']")
-              .innerText = repo["language"];
             repoEl.querySelector("[data-tag='issues-count']")
               .innerText = openIssuesCount;
             repoEl.querySelector("[data-tag='description']")
               .innerText = repo["description"];
             repoEl.querySelector("[data-tag='last-push']")
               .innerText = repo["pushed_at"];
+
+            // Languages can occasionally be null
+            languageEl = repoEl.querySelector("[data-tag='language']");
+            if (repo["language"]) {
+              languageEl.innerText = repo["language"];
+            } else {
+              languageEl.classList.add("hidden");
+            }
 
             reposListEl.appendChild(repoEl);
           }
