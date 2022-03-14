@@ -18,13 +18,18 @@ window.addEventListener("DOMContentLoaded", (event) => {
             repoEl.querySelector("[data-tag='repo-link']")
               .href = repo["html_url"];
             repoEl.querySelector("[data-tag='name']")
-              .innerText = repo["name"];
+              .innerText = "hackclub/" + repo["name"];
             repoEl.querySelector("[data-tag='issues-count']")
               .innerText = openIssuesCount;
             repoEl.querySelector("[data-tag='description']")
               .innerText = repo["description"];
+
+            // Format date
+            let pushedAtDate = new Date(repo["pushed_at"])
+              .toLocaleString();
+
             repoEl.querySelector("[data-tag='last-push']")
-              .innerText = repo["pushed_at"];
+              .innerText = "Last pushed at " + pushedAtDate;
 
             // Languages can occasionally be null
             languageEl = repoEl.querySelector("[data-tag='language']");
