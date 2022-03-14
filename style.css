@@ -69,7 +69,7 @@ ul {
   margin-bottom: var(--spacing-4);
 }
 
-.issues-count, .lang {
+.issues-count, .language {
   float: right;
   margin-right: var(--spacing-1);
   top: 0;
