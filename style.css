@@ -65,11 +65,21 @@ ul {
   margin-bottom: var(--spacing-5);
 }
 
+.repos ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-3);
+}
+
 .repo {
   margin-bottom: var(--spacing-4);
 }
 
-.issues-count, .lang {
+.repo .description {
+  min-height: 50px;
+}
+
+.issues-count, .language {
   float: right;
   margin-right: var(--spacing-1);
   top: 0;

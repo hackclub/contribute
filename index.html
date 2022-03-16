@@ -26,7 +26,7 @@
       <p class="headline">
         A list of active
         <a href="https://hackclub.com/">Hack Club</a>
-        open source repositories with available issues on
+        open source repositories on
         <a href="https://github.com/">GitHub</a>
       </p>
     </header>
@@ -60,22 +60,34 @@
       </p>
     </div>
 
-    <div class="repos">
+    <div class="repos" data-tag="repos">
       <div class="container">
-        <h2 class="title">Active repositories with open issues</h2>
+        <h2 class="title">Active repositories</h2>
         <div class="no-repos lead hidden" data-tag="no-repos">
-          Wow, it looks like none of our repositories have open issues at the moment! What a great problem to have.
+          Wow, it looks like none of our repositories have open issues or pull
+          requests at the moment! What a great problem to have.
         </div>
 
         <ul>
-          <li class="repo" data-tag="example-repo">
-            <a href="#" class="no-styles-a">
+          <li class="repo hidden" data-tag="example-repo">
+            <a href="#" target="_blank" class="no-styles-a" data-tag="repo-link">
               <div class="card interactive">
-                <span class="issues-count pill">4 open issues</span>
-                <span class="lang outline-badge">HTML</span>
-                <h3 class="name headline">Hacker Challenge</h3>
-                <p class="description subtitle">Use your web inspector to hack your way through a series of challenges.</p>
-                <span class="last-push caption">Last push on 02-21-2022</span>
+                <span class="issues-count pill" data-tag="issues-count">
+                  4 issues/PRs
+                </span>
+                <span class="language outline-badge" data-tag="language">
+                  HTML
+                </span>
+                <h3 class="headline" data-tag="name">
+                  Hacker Challenge
+                </h3>
+                <p class="subtitle description" data-tag="description">
+                  Use your web inspector to hack your way through a series of
+                  challenges.
+                </p>
+                <span class="caption" data-tag="last-push">
+                  Last push on 02-21-2022
+                </span>
               </div>
             </a>
           </li>
