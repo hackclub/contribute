@@ -18,22 +18,37 @@ window.addEventListener("DOMContentLoaded", (event) => {
             repoEl.querySelector("[data-tag='repo-link']")
               .href = repo["html_url"];
             repoEl.querySelector("[data-tag='name']")
-              .innerText = "hackclub/" + repo["name"];
+              .innerText = repo["name"];
             repoEl.querySelector("[data-tag='description']")
               .innerText = repo["description"];
 
             // Format issues
-            let formattedText = openIssuesCount == 1 ? " open issue" : " open issues"
+            let formattedText = openIssuesCount == 1
+              ? " issue or PR"
+              : " issues and PRs"
 
             repoEl.querySelector("[data-tag='issues-count']")
               .innerText = openIssuesCount + formattedText;
 
             // Format date
-            let pushedAtDate = new Date(repo["pushed_at"])
-              .toLocaleString();
+            let currentDate = new Date();
+            let pushedAtDate = new Date(repo["pushed_at"]);
+
+            let diffInMS = (currentDate.getTime() - pushedAtDate.getTime())
+            let diffInDays =  Math.floor(diffInMS / (1000 * 3600 * 24));
+
+            let dateText;
+
+            if (diffInDays < 1) {
+              dateText = "today";
+            } else if (diffInDays == 1) {
+              dateText = diffInDays + " day ago"
+            } else if (diffInDays >= 2) {
+              dateText = diffInDays + " days ago"
+            }
 
             repoEl.querySelector("[data-tag='last-push']")
-              .innerText = "Last pushed at " + pushedAtDate;
+              .innerText = "Last updated " + dateText;
 
             // Languages can occasionally be null
             languageEl = repoEl.querySelector("[data-tag='language']");

@@ -75,8 +75,8 @@ ul {
   margin-bottom: var(--spacing-4);
 }
 
-.repo .card {
-  min-height: 220px;
+.repo .description {
+  min-height: 50px;
 }
 
 .issues-count, .language {
