@@ -3,7 +3,7 @@ body{
   "Segoe UI", Roboto, sans-serif;
 }
 header {
-  background: var(--cyan); 
+  background: var(--cyan);
   background-image: url(images/pr.svg);
   background-repeat: repeat;
   color: var(--white);
@@ -87,6 +87,12 @@ ul {
   top: 0;
 }
 
+/* How to contribute section */
+#how-do-i-contribute {
+  font-size: var(--font-4);
+}
+
+/* Shared styles */
 .hidden {
   display: none;
 }
