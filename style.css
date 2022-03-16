@@ -3,7 +3,9 @@ body{
   "Segoe UI", Roboto, sans-serif;
 }
 header {
-  background: var(--cyan);
+  background: var(--cyan); 
+  background-image: url(images/pr.svg);
+  background-repeat: repeat;
   color: var(--white);
   padding: var(--spacing-6) var(--spacing-0) var(--spacing-6);
   text-align: center;
