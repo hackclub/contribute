@@ -19,10 +19,14 @@ window.addEventListener("DOMContentLoaded", (event) => {
               .href = repo["html_url"];
             repoEl.querySelector("[data-tag='name']")
               .innerText = "hackclub/" + repo["name"];
-            repoEl.querySelector("[data-tag='issues-count']")
-              .innerText = openIssuesCount;
             repoEl.querySelector("[data-tag='description']")
               .innerText = repo["description"];
+
+            // Format issues
+            let formattedText = openIssuesCount == 1 ? " open issue" : " open issues"
+
+            repoEl.querySelector("[data-tag='issues-count']")
+              .innerText = openIssuesCount + formattedText;
 
             // Format date
             let pushedAtDate = new Date(repo["pushed_at"])
