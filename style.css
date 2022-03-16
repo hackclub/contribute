@@ -1,7 +1,3 @@
-body{
-  font-family: "Phantom Sans", system-ui, -apple-system, BlinkMacSystemFont,
-  "Segoe UI", Roboto, sans-serif;
-}
 header {
   background: var(--cyan);
   background-image: url(images/pr.svg);
@@ -90,6 +86,12 @@ ul {
 /* How to contribute section */
 #how-do-i-contribute {
   font-size: var(--font-4);
+}
+
+/* Footer */
+footer {
+  background: var(--sunken);
+  height: var(--spacing-6);
 }
 
 /* Shared styles */
