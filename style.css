@@ -45,6 +45,10 @@ ul {
   line-height: 1.75;
 }
 
+header > p, header > p > a{
+  color: var(--white)!important;
+}
+
 .container {
   margin: var(--spacing-5) auto;
 }
@@ -55,12 +59,12 @@ ul {
 }
 
 .repos {
-  background: var(--muted);
+  background: var(--primary);
   padding: var(--spacing-4) 0;
 }
 
 .repos h2 {
-  margin-bottom: var(--spacing-5);
+  margin-bottom: var(--spacing-4);
 }
 
 .repos ul {
@@ -76,7 +80,7 @@ ul {
 }
 
 .repo {
-  margin-bottom: var(--spacing-4);
+  margin: 0;
 }
 
 .repo .description {
@@ -125,4 +129,8 @@ footer {
   color: var(--primary);
   text-decoration: none;
   text-underline-position: under;
+}
+
+#active-repositories {
+  color: var(--white)
 }
