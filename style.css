@@ -69,6 +69,12 @@ ul {
   gap: var(--spacing-3);
 }
 
+@media (max-width: 768px) {
+  .repos ul {
+    grid-template-columns: 1fr;
+  }
+}
+
 .repo {
   margin-bottom: var(--spacing-4);
 }
