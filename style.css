@@ -99,12 +99,6 @@ header > p, header > p > a{
   font-size: var(--font-4);
 }
 
-/* Footer */
-footer {
-  background: var(--sunken);
-  height: var(--spacing-6);
-}
-
 /* Shared styles */
 .hidden {
   display: none;
