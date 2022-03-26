@@ -53,7 +53,6 @@ ul {
 }
 
 .blurb {
-  /* border: 2px dashed var(--border); */
   border-radius: var(--radii-default);
   padding: var(--spacing-4);
 }
