@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Smythe&display=swap');
+
 header {
   background: var(--cyan);
   background-image: url(images/pr.svg);
@@ -51,7 +53,6 @@ ul {
 }
 
 .blurb {
-  border: 2px dashed var(--border);
   border-radius: var(--radii-default);
   padding: var(--spacing-4);
 }
@@ -142,4 +143,73 @@ header > p, header > p > a{
 
 #active-repositories {
   color: var(--white)
+}
+
+.new ol {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--spacing-3);
+  padding-inline-start: 0 !important; /* overide default padding-inline-start */
+}
+
+.new li {
+  position: relative;
+}
+
+.new li:nth-child(odd){
+  background-color: var(--cyan);
+}
+
+.new li:nth-child(even){
+  background-color: var(--cyan);
+}
+
+@media screen and (max-width: 768px) {
+  .involveBig ol {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .involveBig ol {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card-design {
+  position: absolute;
+  bottom: -30px;
+  right: -5px;
+  font-family: 'Baloo 2', cursive;
+  opacity: 20%;
+  font-size: 60px;
+}
+
+.involve {
+  color: var(--white)
+}
+.involve h3 {
+  font-size: var(--font-5);
+}
+
+.involve p {
+  font-size: var(--font-3);
+  color: var(--white);
+}
+
+.involve a {
+  font-size: var(--font-4);
+  color: var(--white);
+}
+
+.involve img {
+  height: 40%;
+  position: absolute;
+  bottom: -5%;
+  right: -5%;
+  opacity: 20%;
+}
+
+.dino-svg {
+  opacity: 50% !important;
 }
