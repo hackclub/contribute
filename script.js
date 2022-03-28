@@ -1,14 +1,17 @@
 window.addEventListener("DOMContentLoaded", (event) => {
-  let url = "https://api.github.com/users/hackclub/repos?sort=pushed";
+  let url = "https://hackclub.com/api/contribute/";
 
   fetch(url)
     .then(function (response) {
       return response.json();
     })
-    .then(function (repos) {
+    .then(function (resp) {
+      let repos = resp.repositories.nodes;
+
       if (repos.length > 0) {
         repos.forEach((repo) => {
-          let openIssuesCount = repo["open_issues_count"];
+          // Open issue count
+          let openIssuesCount = repo.issues.totalCount;
           if (openIssuesCount > 0) {
             let reposListEl = document.querySelector("[data-tag='repos'] ul");
             let exampleEl = document.querySelector("[data-tag='example-repo']");
@@ -17,21 +20,34 @@ window.addEventListener("DOMContentLoaded", (event) => {
             repoEl.classList.remove("hidden");
 
             repoEl.querySelector("[data-tag='repo-link']").href =
-              repo["html_url"];
-            repoEl.querySelector("[data-tag='name']").innerText = repo["name"];
-            repoEl.querySelector("[data-tag='description']").innerText =
-              repo["description"];
+              repo.url;
 
-            // Format issues
+            // Format open issues language
             let formattedText =
-              openIssuesCount == 1 ? " issue or PR" : " issues and PRs";
+              openIssuesCount == 1 ? " issue" : " issues";
 
             repoEl.querySelector("[data-tag='issues-count']").innerText =
               openIssuesCount + formattedText;
 
-            // Format date
+            // Name
+            repoEl.querySelector("[data-tag='name']").innerText = repo.name;
+
+            // Description
+            repoEl.querySelector("[data-tag='description']").innerText =
+              repo.description;
+
+            // Language
+            // Can occasionally be null
+            languageEl = repoEl.querySelector("[data-tag='language']");
+            if (repo.languages.nodes.length > 0) {
+              languageEl.innerText = repo.languages.nodes[0].name;
+            } else {
+              languageEl.classList.add("hidden");
+            }
+
+            // Pushed at date
             let currentDate = new Date();
-            let pushedAtDate = new Date(repo["pushed_at"]);
+            let pushedAtDate = new Date(repo.pushedAt);
 
             let diffInMS = currentDate.getTime() - pushedAtDate.getTime();
             let diffInDays = Math.floor(diffInMS / (1000 * 3600 * 24));
@@ -48,14 +64,6 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
             repoEl.querySelector("[data-tag='last-push']").innerText =
               "Last updated " + dateText;
-
-            // Languages can occasionally be null
-            languageEl = repoEl.querySelector("[data-tag='language']");
-            if (repo["language"]) {
-              languageEl.innerText = repo["language"];
-            } else {
-              languageEl.classList.add("hidden");
-            }
 
             reposListEl.appendChild(repoEl);
           }
