@@ -9,10 +9,13 @@ window.addEventListener("DOMContentLoaded", (event) => {
       let repos = resp.repositories.nodes;
 
       if (repos.length > 0) {
-        repos.forEach((repo) => {
+        const maxReposToShow = 20;
+        let shownRepoCount = 0;
+        for (let i = 0; shownRepoCount < maxReposToShow; i++) {
           // Open issue count
-          let openIssuesCount = repo.issues.totalCount;
+          let openIssuesCount = repos[i].issues.totalCount;
           if (openIssuesCount > 0) {
+            shownRepoCount++;
             let reposListEl = document.querySelector("[data-tag='repos'] ul");
             let exampleEl = document.querySelector("[data-tag='example-repo']");
 
@@ -20,7 +23,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
             repoEl.classList.remove("hidden");
 
             repoEl.querySelector("[data-tag='repo-link']").href =
-              repo.url;
+              repos[i].url;
 
             // Format open issues language
             let formattedText =
@@ -30,24 +33,24 @@ window.addEventListener("DOMContentLoaded", (event) => {
               openIssuesCount + formattedText;
 
             // Name
-            repoEl.querySelector("[data-tag='name']").innerText = repo.name;
+            repoEl.querySelector("[data-tag='name']").innerText = repos[i].name;
 
             // Description
             repoEl.querySelector("[data-tag='description']").innerText =
-              repo.description;
+              repos[i].description;
 
             // Language
             // Can occasionally be null
             languageEl = repoEl.querySelector("[data-tag='language']");
-            if (repo.languages.nodes.length > 0) {
-              languageEl.innerText = repo.languages.nodes[0].name;
+            if (repos[i].languages.nodes.length > 0) {
+              languageEl.innerText = repos[i].languages.nodes[0].name;
             } else {
               languageEl.classList.add("hidden");
             }
 
             // Pushed at date
             let currentDate = new Date();
-            let pushedAtDate = new Date(repo.pushedAt);
+            let pushedAtDate = new Date(repos[i].pushedAt);
 
             let diffInMS = currentDate.getTime() - pushedAtDate.getTime();
             let diffInDays = Math.floor(diffInMS / (1000 * 3600 * 24));
@@ -67,7 +70,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
             reposListEl.appendChild(repoEl);
           }
-        });
+        }
       } else {
         showEmptyMessage();
       }
