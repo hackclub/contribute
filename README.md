@@ -4,7 +4,7 @@ Hack Club is a nonprofit network of high school coding clubs and makers around t
 
 ## How it works
 
-This page uses GitHub's unauthenticated API to pull down public repositories from an organization. We use JavaScript to clone an example element and use that to populate the repository elements on the page.
+This page uses [hackclub.com/api/contribute](https://hackclub.com/api/contribute) ([source](https://github.com/hackclub/site/blob/main/pages/api/contribute.js)) to pull down public repositories from the [hackclub](https://github.com/hackclub) organization. We use JavaScript to clone an example element and use that to populate the repository elements on the page.
 
 ## Contributing
 
