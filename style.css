@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Smythe&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Smythe&display=swap");
 
 header {
   background: var(--cyan);
@@ -61,8 +61,9 @@ ul {
   line-height: 1.75;
 }
 
-header > p, header > p > a{
-  color: var(--white)!important;
+header > p,
+header > p > a {
+  color: var(--white) !important;
 }
 
 .container {
@@ -97,7 +98,6 @@ header > p, header > p > a{
 
 .repo {
   margin: 0;
-  
 }
 
 .repo .description {
@@ -143,7 +143,7 @@ header > p, header > p > a{
 }
 
 #active-repositories {
-  color: var(--white)
+  color: var(--white);
 }
 
 .new ol {
@@ -157,11 +157,11 @@ header > p, header > p > a{
   position: relative;
 }
 
-.new li:nth-child(odd){
+.new li:nth-child(odd) {
   background-color: var(--cyan);
 }
 
-.new li:nth-child(even){
+.new li:nth-child(even) {
   background-color: var(--cyan);
 }
 
@@ -181,13 +181,13 @@ header > p, header > p > a{
   position: absolute;
   bottom: -30px;
   right: -5px;
-  font-family: 'Baloo 2', cursive;
+  font-family: "Baloo 2", cursive;
   opacity: 20%;
   font-size: 60px;
 }
 
 .involve {
-  color: var(--white)
+  color: var(--white);
 }
 .involve h3 {
   font-size: var(--font-5);
@@ -213,4 +213,48 @@ header > p, header > p > a{
 
 .dino-svg {
   opacity: 50% !important;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid var(--black);
+  border-bottom-color: var(--red);
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+  align-self: center;
+  margin: var(--spacing-3);
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-text {
+  color: var(--muted);
+  text-align: center;
+}
+
+.loader-container:not(.hidden) {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.error-container:not(.hidden) {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.error-icon {
+  margin: var(--spacing-3);
+  height: var(--font-7);
 }
