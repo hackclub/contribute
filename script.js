@@ -57,12 +57,20 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
             let dateText;
 
-            if (diffInDays < 1) {
-              dateText = "today";
-            } else if (diffInDays == 1) {
-              dateText = diffInDays + " day ago";
-            } else if (diffInDays >= 2) {
-              dateText = diffInDays + " days ago";
+            if (diffInDays == 0) { // less than 24 hours ago, so we'll be more precise
+              if (diffInMS < 1000 * 60 * 60) { // 1 hour
+                let diffInMin = Math.floor(diffInMS / (1000 * 60));
+                if (diffInMin <= 5) {
+                  dateText = "just now!";
+                } else {
+                  dateText = diffInMin + " minutes ago";
+                }
+              } else {
+                let diffInHr = Math.floor(diffInMS / (1000 * 60 * 60));
+                dateText = diffInHr + " hour" + (diffInHr == 1 ? "" : "s") + " ago";
+              }
+            } else {
+              dateText = diffInDays + " day" +  (diffInDays == 1 ? "" : "s") + " ago";
             }
 
             repoEl.querySelector("[data-tag='last-push']").innerText =
