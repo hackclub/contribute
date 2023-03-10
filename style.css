@@ -218,7 +218,7 @@ header > p > a {
 .loader {
   width: 48px;
   height: 48px;
-  border: 5px solid var(--black);
+  border: 5px solid var(--slate);
   border-bottom-color: var(--red);
   border-radius: 50%;
   display: inline-block;
