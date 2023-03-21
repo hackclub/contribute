@@ -1,95 +1,128 @@
 window.addEventListener("DOMContentLoaded", (event) => {
-  let url = "https://hackclub.com/api/contribute/";
 
-  fetch(url)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (resp) {
-      let repos = resp.repositories.nodes;
+  let hash = window.location.hash;
 
-      if (repos.length > 0) {
-        const maxReposToShow = 20;
-        let shownRepoCount = 0;
-        for (let i = 0; shownRepoCount < maxReposToShow; i++) {
-          // Open issue count
-          let openIssuesCount = repos[i].issues.totalCount;
-          if (openIssuesCount > 0) {
-            shownRepoCount++;
-            let reposListEl = document.querySelector("[data-tag='repos'] ul");
-            let exampleEl = document.querySelector("[data-tag='example-repo']");
+  if (hash == "#force-no-repos") {
+    // Force the "no repos" message to show
+    showEmptyMessage();
+  } else if (hash == "#force-loader") {
+    Function.prototype(); // A no-op to keep the loader showing forever
+  } else if (hash == "#force-error") {
+    hideLoader();
+    showErrorMessage();
+  } else {
+    loadAndRenderRepos();
+  }
 
-            let repoEl = exampleEl.cloneNode(true);
-            repoEl.classList.remove("hidden");
 
-            repoEl.querySelector("[data-tag='repo-link']").href =
-              repos[i].url;
+  function loadAndRenderRepos() {
+    let url = "https://hackclub.com/api/contribute/";
 
-            // Format open issues language
-            let formattedText =
-              openIssuesCount == 1 ? " issue" : " issues";
+    fetch(url)
+      .then(function (response) {
+        if (response.ok) {
+          return response.json();
+        } else {
+          return { then: function () { } }; // end the promise chain
+        }
+      })
+      .then(function (resp) {
+        hideLoader();
+        let repos = resp.repositories.nodes;
 
-            repoEl.querySelector("[data-tag='issues-count']").innerText =
-              openIssuesCount + formattedText;
+        if (repos.length > 0) {
+          const maxReposToShow = 20;
+          let shownRepoCount = 0;
+          for (let i = 0; shownRepoCount < maxReposToShow; i++) {
+            // Open issue count
+            let openIssuesCount = repos[i].issues.totalCount;
+            if (openIssuesCount > 0) {
+              shownRepoCount++;
+              let reposListEl = document.querySelector("[data-tag='repos'] ul");
+              let exampleEl = document.querySelector("[data-tag='example-repo']");
 
-            // Name
-            repoEl.querySelector("[data-tag='name']").innerText = repos[i].name;
+              let repoEl = exampleEl.cloneNode(true);
+              repoEl.classList.remove("hidden");
 
-            // Description
-            repoEl.querySelector("[data-tag='description']").innerText =
-              repos[i].description;
+              repoEl.querySelector("[data-tag='repo-link']").href =
+                repos[i].url;
 
-            // Language
-            // Can occasionally be null
-            languageEl = repoEl.querySelector("[data-tag='language']");
-            if (repos[i].languages.nodes.length > 0) {
-              languageEl.innerText = repos[i].languages.nodes[0].name;
-            } else {
-              languageEl.classList.add("hidden");
-            }
+              // Format open issues language
+              let formattedText = openIssuesCount == 1 ? " issue" : " issues";
 
-            // Pushed at date
-            let currentDate = new Date();
-            let pushedAtDate = new Date(repos[i].pushedAt);
+              repoEl.querySelector("[data-tag='issues-count']").innerText =
+                openIssuesCount + formattedText;
 
-            let diffInMS = currentDate.getTime() - pushedAtDate.getTime();
-            let diffInDays = Math.floor(diffInMS / (1000 * 3600 * 24));
+              // Name
+              repoEl.querySelector("[data-tag='name']").innerText = repos[i].name;
 
-            let dateText;
+              // Description
+              repoEl.querySelector("[data-tag='description']").innerText =
+                repos[i].description;
 
-            if (diffInDays == 0) { // less than 24 hours ago, so we'll be more precise
-              if (diffInMS < 1000 * 60 * 60) { // 1 hour
-                let diffInMin = Math.floor(diffInMS / (1000 * 60));
-                if (diffInMin <= 5) {
-                  dateText = "just now!";
+              // Language
+              // Can occasionally be null
+              languageEl = repoEl.querySelector("[data-tag='language']");
+              if (repos[i].languages.nodes.length > 0) {
+                languageEl.innerText = repos[i].languages.nodes[0].name;
+              } else {
+                languageEl.classList.add("hidden");
+              }
+
+              // Pushed at date
+              let currentDate = new Date();
+              let pushedAtDate = new Date(repos[i].pushedAt);
+
+              let diffInMS = currentDate.getTime() - pushedAtDate.getTime();
+              let diffInDays = Math.floor(diffInMS / (1000 * 3600 * 24));
+
+              let dateText;
+
+              if (diffInDays == 0) { // less than 24 hours ago, so we'll be more precise
+                if (diffInMS < 1000 * 60 * 60) { // 1 hour
+                  let diffInMin = Math.floor(diffInMS / (1000 * 60));
+                  if (diffInMin <= 5) {
+                    dateText = "just now!";
+                  } else {
+                    dateText = diffInMin + " minutes ago";
+                  }
                 } else {
-                  dateText = diffInMin + " minutes ago";
+                  let diffInHr = Math.floor(diffInMS / (1000 * 60 * 60));
+                  dateText = diffInHr + " hour" + (diffInHr == 1 ? "" : "s") + " ago";
                 }
               } else {
-                let diffInHr = Math.floor(diffInMS / (1000 * 60 * 60));
-                dateText = diffInHr + " hour" + (diffInHr == 1 ? "" : "s") + " ago";
+                dateText = diffInDays + " day" + (diffInDays == 1 ? "" : "s") + " ago";
               }
-            } else {
-              dateText = diffInDays + " day" +  (diffInDays == 1 ? "" : "s") + " ago";
+
+              repoEl.querySelector("[data-tag='last-push']").innerText =
+                "Last updated " + dateText;
+
+              reposListEl.appendChild(repoEl);
             }
-
-            repoEl.querySelector("[data-tag='last-push']").innerText =
-              "Last updated " + dateText;
-
-            reposListEl.appendChild(repoEl);
           }
+        } else {
+          showEmptyMessage();
         }
-      } else {
-        showEmptyMessage();
-      }
-    })
-    .catch(function (err) {
-      console.log("Fetching " + url + " failed");
-      console.log("Error: " + err);
-    });
+      })
+      .catch(function (err) {
+        console.log("Fetching " + url + " failed");
+        console.log("Error: " + err);
+        showErrorMessage();
+      });
+  }
 
   function showEmptyMessage() {
     let noReposEl = document.querySelector("[data-tag='no-repos']");
     noReposEl.classList.remove("hidden");
+  }
+
+  function hideLoader() {
+    let loaderEl = document.querySelector("[data-tag='loader']");
+    loaderEl.classList.add("hidden");
+  }
+
+  function showErrorMessage() {
+    let errorEl = document.querySelector("[data-tag='error']");
+    errorEl.classList.remove("hidden");
   }
 });

@@ -20,3 +20,11 @@ Development chatter happens in the [#hackclub-site-dev](https://app.slack.com/cl
    - `python -m SimpleHTTPServer`
 1. View your server
    - `open http://localhost:8000/`
+
+## Debugging Tools
+
+There are some special URL fragments you can add to test things:
+
+* `#force-no-repos` will force the "no repositories with open issues" message to show
+* `#force-loader` will force the loader to show infinitely
+* `#force-error` will force the error message to show

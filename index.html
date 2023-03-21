@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <title>Contribute to Hack Club</title>
@@ -15,12 +15,21 @@
     <meta name="theme-color" content="#ec3750" />
     <meta name="msapplication-TileColor" content="#ec3750" />
 
-    <script defer data-domain="contribute.hackclub.com" src="https://plausible.io/js/plausible.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <script
+      defer
+      data-domain="contribute.hackclub.com"
+      src="https://plausible.io/js/plausible.js"
+    ></script>
   </head>
 
   <body>
     <a class="banner" href="https://hackclub.com/">
-      <img src="images/flag-orpheus-top.png" alt="Dinosaur arm holding flag that reads 'Hack Club'" />
+      <img
+        src="images/flag-orpheus-top.png"
+        alt="Dinosaur arm holding flag that reads 'Hack Club'"
+      />
     </a>
 
     <header>
@@ -49,13 +58,15 @@
       </p>
 
       <p>
-        Transparency is a core value of Hack Club, and code is not the only thing we open source.
+        Transparency is a core value of Hack Club, and code is not the only
+        thing we open source.
         <a href="https://hackclub.com/opensource">
           Check out our finances, workshops, and more.
         </a>
       </p>
 
-      <p>We
+      <p>
+        We
         <span class="highlight">welcome and encourage your contributions</span>,
         and we look forward to seeing the things you create!
       </p>
@@ -74,6 +85,26 @@
         <div class="no-repos lead hidden" data-tag="no-repos">
           Wow, it looks like none of our repositories have open issues or pull
           requests at the moment! What a great problem to have.
+        </div>
+
+        <div class="card loader-container" data-tag="loader">
+          <span class="loader"></span>
+          <div class="loading-text">
+            Fetching the latest list of repositories. Hang tight...
+          </div>
+        </div>
+
+        <div class="hidden card error-container" data-tag="error">
+          <img
+            class="error-icon"
+            src="https://icons.hackclub.com/api/icons/hackclub-yellow/important"
+            alt="A yellow alert symbol"
+          />
+          <div class="lead">
+            Looks like something went wrong. Try refreshing, or
+            <a href="https://github.com/hackclub/contribute">open an issue</a>
+            if it keeps happening.
+          </div>
         </div>
 
         <ul>
@@ -207,78 +238,80 @@
         </p>
       </div>
       <div class="container">
-      <div class="container blurb new">
-        <h3 class="title" id="new-here">New here? Welcome!</h3>
-        <p>
-          <a href="https://hackclub.com/" target="_blank"> Hack Club </a>
-          is a nonprofit network of high school coding clubs and makers around
-          the world. We are so happy to have you!
-        </p>
-        <ol>
-          <li class="card involve">
-            <a href="https://hackclub.com/slack/" target="_blank">
-              1. Join our <strong>online community</strong>
-            </a>
-            <p>
-              We’ve got a 24/7 Slack chatroom of 25k+ teenagers learning to code
-              & building amazing projects, & you’ll fit right in.
-            </p>
-            <img src="/images/slack.svg" alt="Slack logo" />
-          </li>
+        <div class="container blurb new">
+          <h3 class="title" id="new-here">New here? Welcome!</h3>
+          <p>
+            <a href="https://hackclub.com/" target="_blank"> Hack Club </a>
+            is a nonprofit network of high school coding clubs and makers around
+            the world. We are so happy to have you!
+          </p>
+          <ol>
+            <li class="card involve">
+              <a href="https://hackclub.com/slack/" target="_blank">
+                1. Join our <strong>online community</strong>
+              </a>
+              <p>
+                We’ve got a 24/7 Slack chatroom of 25k+ teenagers learning to
+                code & building amazing projects, & you’ll fit right in.
+              </p>
+              <img src="/images/slack.svg" alt="Slack logo" />
+            </li>
 
-          <li class="card involve">
-            <a href="https://github.com/" target="_blank">
-              2. Join <strong>GitHub</strong>
-            </a>
-            <p>
-              GitHub is a development platform where people collaborate on code.
-              This is where we can find and edit each others code.
-            </p>
-            <img src="/images/github.svg" alt="GitHub logo" />
-          </li>
+            <li class="card involve">
+              <a href="https://github.com/" target="_blank">
+                2. Join <strong>GitHub</strong>
+              </a>
+              <p>
+                GitHub is a development platform where people collaborate on
+                code. This is where we can find and edit each others code.
+              </p>
+              <img src="/images/github.svg" alt="GitHub logo" />
+            </li>
 
-          <li class="card involve">
-            <a href="https://draw-dino.hackclub.com/" target="_blank">
-              3. Make your first <strong>pull request</strong>
-            </a>
-            <p>
-              Pull requests are the way we edit each others code. Follow the
-              link above for an interactive demonstation on how to make a pull
-              request!
-            </p>
-            <span class="card-design">Dino PR</span>
-          </li>
+            <li class="card involve">
+              <a href="https://draw-dino.hackclub.com/" target="_blank">
+                3. Make your first <strong>pull request</strong>
+              </a>
+              <p>
+                Pull requests are the way we edit each others code. Follow the
+                link above for an interactive demonstation on how to make a pull
+                request!
+              </p>
+              <span class="card-design">Dino PR</span>
+            </li>
 
-          <li class="card involve">
-            <a href="https://scrapbook.hackclub.com/about" target="_blank">
-              4. Share your work on <strong>Scrapbook</strong>
-            </a>
-            <p>
-              As a Hack Clubber, you are always learning and building things.
-              Scrapbook allows you to share updates on the things you're doing
-              with the rest of the Hack Club community.
-            </p>
-            <span class="card-design">Scrap</span>
-          </li>
+            <li class="card involve">
+              <a href="https://scrapbook.hackclub.com/about" target="_blank">
+                4. Share your work on <strong>Scrapbook</strong>
+              </a>
+              <p>
+                As a Hack Clubber, you are always learning and building things.
+                Scrapbook allows you to share updates on the things you're doing
+                with the rest of the Hack Club community.
+              </p>
+              <span class="card-design">Scrap</span>
+            </li>
 
-          <li class="card involve">
-            <a href="#how-do-i-contribute">
-              5. <strong>Contribute</strong> to more open source projects
-            </a>
-            <p>
-              Once you feel ready, you can start to contribute to other open
-              source projects!
-            </p>
-            <img class="dino-svg" src="/images/dino.svg" alt="Dinosaur waving" />
-          </li>
-        </ol>
-      </div>
+            <li class="card involve">
+              <a href="#how-do-i-contribute">
+                5. <strong>Contribute</strong> to more open source projects
+              </a>
+              <p>
+                Once you feel ready, you can start to contribute to other open
+                source projects!
+              </p>
+              <img
+                class="dino-svg"
+                src="/images/dino.svg"
+                alt="Dinosaur waving"
+              />
+            </li>
+          </ol>
+        </div>
       </div>
     </div>
   </body>
 
-  <footer>
-
-  </footer>
+  <footer></footer>
   <script src="script.js"></script>
 </html>
