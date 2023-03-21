@@ -1,4 +1,5 @@
 window.addEventListener("DOMContentLoaded", (event) => {
+  showLoader();
 
   let hash = window.location.hash;
 
@@ -119,6 +120,64 @@ window.addEventListener("DOMContentLoaded", (event) => {
   function hideLoader() {
     let loaderEl = document.querySelector("[data-tag='loader']");
     loaderEl.classList.add("hidden");
+  }
+
+  function randomLoadMessage() {
+    const loadMessages = [
+      "Loading the list of repos...",
+      "Reticulating repositories...",
+      "Fetching the freshest repos...",
+      "Getting the down-low on these downloads...",
+      "Getting the low-down on these downloads...",
+      "It's a contribution conspiracy!",
+      "It's a contribution conglomerate!",
+      "It's a contribution conga-line!",
+      "It's a conga line of contributions!",
+      "Contribution and retribution...",
+      "Putting the 'repo' in 'repository'...",
+      "Putting the 'con' in 'contribution'...",
+      "Putting the 'rib' in 'contribution'...",
+      "Putting the 'open' in 'open source software'...",
+      "Putting the 'sour' in 'open source software'...",
+      "Putting the 'soft' in 'open source software'...",
+      "Putting the 'pen' in 'open source software'...",
+      "Created by viewers like you...",
+      "Repostravaganza!",
+      "That's a lot of repos...",
+      "Side-loading repos...",
+      "Downloading repos, uploading repos, all-around-loading repos...",
+      "Now for my next trick...",
+      "Now for my next trick, I'll pull a repo from my hat!",
+      "Was... THIS your card?",
+      "Was... THIS your repo?",
+      "Was... THIS your contribution?",
+      "Pulling from the repo of life...",
+      "Pulling from the repo of repos...",
+      "Pulling from the repo of contributions...",
+      "Loading code from the repos...",
+      "Loading repos from the code...",
+      "Repos loading from the code...",
+      "Code loading from the repos...",
+      "Code repo from the loading...",
+      "Repos coding from the loading...",
+      "Commit, push, repeat...",
+      "Commit, rinse, repeat... wait?",
+      "Communicating with the contribution code...",
+      "Reuniting with the repos...",
+      "Communing with the contributions...",
+      "git commit -m 'Fix repo loading message'...",
+      "git commit -m 'Faster repo list load times'...",
+      "git commit -m 'More loading'...",
+      "echo 'patience is a virtue...' | cowsay | lolcat",
+      "Importing repo (1/185,627,198)...",
+      "While you wait for this to load... twitter.com/thestrangelog",
+    ];
+    return loadMessages[Math.floor(Math.random() * loadMessages.length)];
+  }
+
+  function showLoader() {
+    let loaderEl = document.querySelector(".loading-text");
+    loaderEl.innerHTML = randomLoadMessage();
   }
 
   function showErrorMessage() {
