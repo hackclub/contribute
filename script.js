@@ -34,7 +34,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
         if (repos.length > 0) {
           const maxReposToShow = 20;
           let shownRepoCount = 0;
-          for (let i = 0; shownRepoCount < maxReposToShow; i++) {
+          for (let i = 0; (shownRepoCount < maxReposToShow) && i < repos.length; i++) {
             // Open issue count
             let openIssuesCount = repos[i].issues.totalCount;
             if (openIssuesCount > 0) {
