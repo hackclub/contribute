@@ -18,6 +18,14 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
   function loadAndRenderRepos() {
     let url = "https://hackclub.com/api/contribute/";
+    // A list of repos that shouldn't be shown here - 
+    // i.e. ones where issues don't represent community pickup-able action items.
+    const excluded_repos = [
+      "OnBoard",
+      "confessions",
+      "modpack",
+      "infra",
+    ]
 
     fetch(url)
       .then(function (response) {
@@ -35,6 +43,10 @@ window.addEventListener("DOMContentLoaded", (event) => {
           const maxReposToShow = 20;
           let shownRepoCount = 0;
           for (let i = 0; (shownRepoCount < maxReposToShow) && i < repos.length; i++) {
+            // Check if repo is in denylist
+            if (excluded_repos.includes(repos[i].name)) {
+              continue; // skip this one
+            }
             // Open issue count
             let openIssuesCount = repos[i].issues.totalCount;
             if (openIssuesCount > 0) {
