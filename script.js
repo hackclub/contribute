@@ -24,7 +24,6 @@ window.addEventListener("DOMContentLoaded", (event) => {
       "OnBoard",
       "confessions",
       "modpack",
-      "infra",
     ]
 
     fetch(url)
