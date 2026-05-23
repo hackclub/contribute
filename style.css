@@ -43,6 +43,7 @@ ul {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(-5deg);
   }
@@ -54,7 +55,7 @@ ul {
 
 @media (max-width: 48em) {
   .card {
-    padding: 5px
+    padding: 5px;
   }
 }
 
@@ -67,8 +68,8 @@ ul {
   line-height: 1.75;
 }
 
-header > p,
-header > p > a {
+header>p,
+header>p>a {
   color: var(--white) !important;
 }
 
@@ -122,12 +123,10 @@ header > p > a {
 }
 
 .highlight {
-  background-image: linear-gradient(
-    -100deg,
-    rgba(243, 234, 164, 0.33),
-    rgba(243, 234, 164, 0.95),
-    rgba(243, 234, 164, 0.1)
-  );
+  background-image: linear-gradient(-100deg,
+      rgba(243, 234, 164, 0.33),
+      rgba(243, 234, 164, 0.95),
+      rgba(243, 234, 164, 0.1));
 }
 
 .no-styles-a {
@@ -150,7 +149,8 @@ header > p > a {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: var(--spacing-3);
-  padding-inline-start: 0 !important; /* overide default padding-inline-start */
+  padding-inline-start: 0 !important;
+  /* overide default padding-inline-start */
 }
 
 .new li {
@@ -177,6 +177,7 @@ header > p > a {
 .involve {
   color: var(--white);
 }
+
 .involve h3 {
   font-size: var(--font-5);
 }
@@ -216,10 +217,35 @@ header > p > a {
   margin: var(--spacing-3);
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --cyan: #1f657a;
+    --text: #fff;
+  }
+
+  body {
+    background-color: #031222;
+  }
+
+  /*rgba(3, 18, 24, 0,1)*/
+
+  .highlight {
+    background-image: linear-gradient(-100deg,
+        rgba(60, 78, 65, 0.4),
+        rgba(60, 78, 65, 0.95),
+        rgba(60, 78, 65, 0.1)) !important;
+  }
+
+  .repos {
+    background: radial-gradient(#9b318b, #4754e1) !important;
+  }
+}
+
 @keyframes rotation {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
@@ -261,14 +287,14 @@ header > p > a {
 
 @media (max-width: 1000px) {
   .new ol {
-	grid-template-columns: 1fr;
+    grid-template-columns: 1fr;
   }
-  
+
   .card-design {
-	bottom: -25px;
-	right: 10px;
+    bottom: -25px;
+    right: 10px;
   }
-  
+
   .involve img {
     bottom: -5%;
     right: -1%;
