@@ -17,43 +17,41 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
   updateRepositoryCount();
 
-
   function loadAndRenderRepos() {
-    let url = "https://hackclub.com/api/contribute/";
-    // A list of repos that shouldn't be shown here - 
+    let url =
+      "https://api.github.com/repos/hackclub?sort=updated&direction=desc&per_page=10";
+    // A list of repos that shouldn't be shown here -
     // i.e. ones where issues don't represent community pickup-able action items.
-    const excluded_repos = [
-      "OnBoard",
-      "confessions",
-      "modpack",
-    ]
+    const excluded_repos = [];
 
     fetch(url)
       .then(function (response) {
         if (response.ok) {
           return response.json();
         } else {
-          return { then: function () { } }; // end the promise chain
+          return { then: function () {} }; // end the promise chain
         }
       })
-      .then(function (resp) {
+      .then(async function (resp) {
         hideLoader();
-        let repos = resp.repositories.nodes;
+        let repos = resp;
 
         if (repos.length > 0) {
-          const maxReposToShow = 20;
+          const maxReposToShow = 10;
           let shownRepoCount = 0;
-          for (let i = 0; (shownRepoCount < maxReposToShow) && i < repos.length; i++) {
-            // Check if repo is in denylist
-            if (excluded_repos.includes(repos[i].name)) {
-              continue; // skip this one
-            }
+          for (
+            let i = 0;
+            shownRepoCount < maxReposToShow && i < repos.length;
+            i++
+          ) {
             // Open issue count
-            let openIssuesCount = repos[i].issues.totalCount;
+            let openIssuesCount = repos[i].open_issues_count;
             if (openIssuesCount > 0) {
               shownRepoCount++;
               let reposListEl = document.querySelector("[data-tag='repos'] ul");
-              let exampleEl = document.querySelector("[data-tag='example-repo']");
+              let exampleEl = document.querySelector(
+                "[data-tag='example-repo']"
+              );
 
               let repoEl = exampleEl.cloneNode(true);
               repoEl.classList.remove("hidden");
@@ -68,7 +66,8 @@ window.addEventListener("DOMContentLoaded", (event) => {
                 openIssuesCount + formattedText;
 
               // Name
-              repoEl.querySelector("[data-tag='name']").innerText = repos[i].name;
+              repoEl.querySelector("[data-tag='name']").innerText =
+                repos[i].name;
 
               // Description
               repoEl.querySelector("[data-tag='description']").innerText =
@@ -76,42 +75,25 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
               // Language
               // Can occasionally be null
-              languageEl = repoEl.querySelector("[data-tag='language']");
-              if (repos[i].languages.nodes.length > 0) {
-                languageEl.innerText = repos[i].languages.nodes[0].name;
+              let languageEl = repoEl.querySelector("[data-tag='language']");
+              let langFetch = await fetch(repos[i].languages_url);
+              let lang = langFetch.ok ? await langFetch.json() : {};
+              let languages = Object.keys(lang);
+              if (languages.length > 0) {
+                languageEl.innerText = languages[0];
               } else {
                 languageEl.classList.add("hidden");
               }
 
-              // Pushed at date
-              let currentDate = new Date();
-              let pushedAtDate = new Date(repos[i].pushedAt);
+              // Last push
+              let lastPushEl = repoEl.querySelector("[data-tag='last-push']");
+              let lastPush = new Intl.DateTimeFormat("en-us", {
+                dateStyle: "full",
+                timeStyle: "long"
+              }).format(new Date(repos[i].pushed_at));
+              lastPushEl.innerText = "Last push: " + lastPush;
 
-              let diffInMS = currentDate.getTime() - pushedAtDate.getTime();
-              let diffInDays = Math.floor(diffInMS / (1000 * 3600 * 24));
-
-              let dateText;
-
-              if (diffInDays == 0) { // less than 24 hours ago, so we'll be more precise
-                if (diffInMS < 1000 * 60 * 60) { // 1 hour
-                  let diffInMin = Math.floor(diffInMS / (1000 * 60));
-                  if (diffInMin <= 5) {
-                    dateText = "just now!";
-                  } else {
-                    dateText = diffInMin + " minutes ago";
-                  }
-                } else {
-                  let diffInHr = Math.floor(diffInMS / (1000 * 60 * 60));
-                  dateText = diffInHr + " hour" + (diffInHr == 1 ? "" : "s") + " ago";
-                }
-              } else {
-                dateText = diffInDays + " day" + (diffInDays == 1 ? "" : "s") + " ago";
-              }
-
-              repoEl.querySelector("[data-tag='last-push']").innerText =
-                "Last updated " + dateText;
-
-              reposListEl.appendChild(repoEl);
+              reposListEl.append(repoEl);
             }
           }
         } else {
@@ -184,6 +166,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
       "echo 'patience is a virtue...' | cowsay | lolcat",
       "Importing repo (1/185,627,198)...",
       "While you wait for this to load... twitter.com/thestrangelog",
+      "Where might be the repositories..."
     ];
     return loadMessages[Math.floor(Math.random() * loadMessages.length)];
   }
@@ -193,13 +176,15 @@ window.addEventListener("DOMContentLoaded", (event) => {
     loaderEl.innerHTML = randomLoadMessage();
   }
 
-  function showErrorMessage() {
+  function showErrorMessage(err) {
     let errorEl = document.querySelector("[data-tag='error']");
     errorEl.classList.remove("hidden");
   }
 
   async function fetchRepositoryCount() {
-    const response = await (await fetch("https://api.github.com/orgs/hackclub")).json();
+    const response = await (
+      await fetch("https://api.github.com/orgs/hackclub")
+    ).json();
     return response.public_repos;
   }
 

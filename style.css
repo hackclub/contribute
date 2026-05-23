@@ -221,6 +221,7 @@ header>p>a {
   :root {
     --cyan: #1f657a;
     --text: #fff;
+    --elevated: #000;
   }
 
   body {
@@ -244,6 +245,10 @@ header>p>a {
   .error-container:not(.hidden) {
     background-color: var(--dark) !important;
   }
+}
+
+li.repo div.card.interactive {
+  height: 100%;
 }
 
 @keyframes rotation {
