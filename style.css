@@ -224,7 +224,7 @@ header>p>a {
   }
 
   body {
-    background-color: #031222;
+    background-color: var(--dark);
   }
 
   /*rgba(3, 18, 24, 0,1)*/
@@ -238,6 +238,11 @@ header>p>a {
 
   .repos {
     background: radial-gradient(#9b318b, #4754e1) !important;
+  }
+
+  .loader-container:not(.hidden),
+  .error-container:not(.hidden) {
+    background-color: var(--dark) !important;
   }
 }
 
@@ -260,12 +265,16 @@ header>p>a {
   display: flex;
   justify-content: center;
   flex-direction: column;
+  background-color: var(--snow);
+  margin: var(--spacing-3) 0;
 }
 
 .error-container:not(.hidden) {
   display: flex;
   justify-content: center;
   flex-direction: column;
+  background-color: var(--snow);
+  margin: var(--spacing-3) 0;
 }
 
 .error-icon {
