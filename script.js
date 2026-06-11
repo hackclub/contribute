@@ -19,7 +19,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
   function loadAndRenderRepos() {
     let url =
-      "https://api.github.com/repos/hackclub?sort=updated&direction=desc&per_page=10";
+      "https://api.github.com/orgs/hackclub/repos?sort=updated&direction=desc&per_page=10";
     // A list of repos that shouldn't be shown here -
     // i.e. ones where issues don't represent community pickup-able action items.
     const excluded_repos = [];
@@ -70,8 +70,12 @@ window.addEventListener("DOMContentLoaded", (event) => {
                 repos[i].name;
 
               // Description
-              repoEl.querySelector("[data-tag='description']").innerText =
-                repos[i].description;
+              repoEl.querySelector("[data-tag='description']").innerHTML =
+                (repos[i].description?.length &&
+                  repos[i].description.length === 0) ||
+                !repos[i].description
+                  ? "<i>What could it be?</i>"
+                  : repos[i].description;
 
               // Language
               // Can occasionally be null
