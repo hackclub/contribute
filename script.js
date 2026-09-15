@@ -1,14 +1,20 @@
 window.addEventListener("DOMContentLoaded", (event) => {
+  const REPO_URL = "https://api.github.com/orgs/hackclub/repos?sort=updated&direction=desc&per_page=100";
+  const ORG_URL = "https://api.github.com/orgs/hackclub";
+  const MAX_REPOS_TO_SHOW = 10;
+  const excludedRepos = [];
+
   showLoader();
 
-  let hash = window.location.hash;
+  const hash = window.location.hash;
 
-  if (hash == "#force-no-repos") {
+  if (hash === "#force-no-repos") {
     // Force the "no repos" message to show
+    hideLoader();
     showEmptyMessage();
-  } else if (hash == "#force-loader") {
+  } else if (hash === "#force-loader") {
     Function.prototype(); // A no-op to keep the loader showing forever
-  } else if (hash == "#force-error") {
+  } else if (hash === "#force-error") {
     hideLoader();
     showErrorMessage();
   } else {
@@ -17,108 +23,89 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
   updateRepositoryCount();
 
-  function loadAndRenderRepos() {
-    let url =
-      "https://api.github.com/orgs/hackclub/repos?sort=updated&direction=desc&per_page=10";
-    // A list of repos that shouldn't be shown here -
-    // i.e. ones where issues don't represent community pickup-able action items.
-    const excluded_repos = [];
+  async function loadAndRenderRepos() {
+    try {
+      const response = await fetch(REPO_URL);
 
-    fetch(url)
-      .then(function (response) {
-        if (response.ok) {
-          return response.json();
-        } else {
-          return { then: function () {} }; // end the promise chain
+      if (!response.ok) {
+        throw new Error(`Github returned ${response.status}`);
+      }
+
+      const repos = await response.json();
+
+      if (!Array.isArray(repos)) {
+        throw new Error("github returned an invalid repository response");
+      }
+
+      const reposToShow = repos
+        .filter(
+          (repo) =>
+            !repo.archived &&
+            !repo.disabled &&
+            !repo.fork &&
+            !excludedRepos.includes(repo.name) &&
+            repo.open_issues_count > 0
+        )
+        .slice(0, MAX_REPOS_TO_SHOW);
+
+      hideLoader();
+
+      if (reposToShow.length === 0) {
+        showEmptyMessage();
+        return;
+      }
+
+      const reposListEl = document.querySelector("[data-tag='repos'] ul");
+      const exampleEl = document.querySelector("[data-tag='example-repo']");
+      const fragment = document.createDocumentFragment();
+
+      for (const repo of reposToShow) {
+        const repoEl = exampleEl.cloneNode(true);
+        repoEl.classList.remove("hidden");
+        repoEl.removeAttribute("data-tag");
+        repoEl.querySelector("[data-tag='repo-link']").href = repo.html_url;
+
+        const count = repo.open_issues_count === 1 ? "issue or pull request" : "issues or pull requests";
+        repoEl.querySelector("[data-tag='issues-count']").textContent = `${repo.open_issues_count} open ${count}`;
+
+        repoEl.querySelector("[data-tag='name']").textContent = repo.name;
+
+        const descriptionEl = repoEl.querySelector("[data-tag='description']");
+        descriptionEl.textContent = repo.description || "No description provided";
+        if (!repo.description) {
+          descriptionEl.classList.add("missing-description");
         }
-      })
-      .then(async function (resp) {
-        hideLoader();
-        let repos = resp;
 
-        if (repos.length > 0) {
-          const maxReposToShow = 10;
-          let shownRepoCount = 0;
-          for (
-            let i = 0;
-            shownRepoCount < maxReposToShow && i < repos.length;
-            i++
-          ) {
-            // Open issue count
-            let openIssuesCount = repos[i].open_issues_count;
-            if (openIssuesCount > 0) {
-              shownRepoCount++;
-              let reposListEl = document.querySelector("[data-tag='repos'] ul");
-              let exampleEl = document.querySelector(
-                "[data-tag='example-repo']"
-              );
-
-              let repoEl = exampleEl.cloneNode(true);
-              repoEl.classList.remove("hidden");
-
-              repoEl.querySelector("[data-tag='repo-link']").href =
-                repos[i].url;
-
-              // Format open issues language
-              let formattedText = openIssuesCount == 1 ? " issue" : " issues";
-
-              repoEl.querySelector("[data-tag='issues-count']").innerText =
-                openIssuesCount + formattedText;
-
-              // Name
-              repoEl.querySelector("[data-tag='name']").innerText =
-                repos[i].name;
-
-              // Description
-              repoEl.querySelector("[data-tag='description']").innerHTML =
-                (repos[i].description?.length &&
-                  repos[i].description.length === 0) ||
-                !repos[i].description
-                  ? "<i>What could it be?</i>"
-                  : repos[i].description;
-
-              // Language
-              // Can occasionally be null
-              let languageEl = repoEl.querySelector("[data-tag='language']");
-              let langFetch = await fetch(repos[i].languages_url);
-              let lang = langFetch.ok ? await langFetch.json() : {};
-              let languages = Object.keys(lang);
-              if (languages.length > 0) {
-                languageEl.innerText = languages[0];
-              } else {
-                languageEl.classList.add("hidden");
-              }
-
-              // Last push
-              let lastPushEl = repoEl.querySelector("[data-tag='last-push']");
-              let lastPush = new Intl.DateTimeFormat("en-us", {
-                dateStyle: "full",
-                timeStyle: "long"
-              }).format(new Date(repos[i].pushed_at));
-              lastPushEl.innerText = "Last push: " + lastPush;
-
-              reposListEl.append(repoEl);
-            }
-          }
+        const languageEl = repoEl.querySelector("[data-tag='language']");
+        if (repo.language) {
+          languageEl.textContent = repo.language;
         } else {
-          showEmptyMessage();
+          languageEl.classList.add("hidden");
         }
-      })
-      .catch(function (err) {
-        console.log("Fetching " + url + " failed");
-        console.log("Error: " + err);
-        showErrorMessage();
-      });
+
+        const lastPush = new Intl.DateTimeFormat("en-US", {
+          dateStyle: "medium"
+        }).format(new Date(repo.pushed_at));
+        repoEl.querySelector("[data-tag='last-push']").textContent =
+          `Last push: ${lastPush}`;
+
+        fragment.append(repoEl);
+      }
+
+      reposListEl.append(fragment);
+    } catch (error) {
+      hideLoader();
+      showErrorMessage();
+      console.error("Fetching repositories failed", error);
+    }
   }
 
   function showEmptyMessage() {
-    let noReposEl = document.querySelector("[data-tag='no-repos']");
-    noReposEl.classList.remove("hidden");
+    document.querySelector("[data-tag='no-repos']").classList.remove("hidden");
   }
 
   function hideLoader() {
-    let loaderEl = document.querySelector("[data-tag='loader']");
-    loaderEl.classList.add("hidden");
+    document.querySelector("[data-tag='loader']").classList.add("hidden");
   }
 
   function randomLoadMessage() {
@@ -176,29 +163,31 @@ window.addEventListener("DOMContentLoaded", (event) => {
   }
 
   function showLoader() {
-    let loaderEl = document.querySelector(".loading-text");
-    loaderEl.innerHTML = randomLoadMessage();
+    document.querySelector(".loading-text").textContent = randomLoadMessage();
   }
 
   function showErrorMessage(err) {
-    let errorEl = document.querySelector("[data-tag='error']");
-    errorEl.classList.remove("hidden");
-  }
-
-  async function fetchRepositoryCount() {
-    const response = await (
-      await fetch("https://api.github.com/orgs/hackclub")
-    ).json();
-    return response.public_repos;
+    document.querySelector("[data-tag='error']").classList.remove("hidden");
   }
 
   async function updateRepositoryCount() {
-    const counter = document.getElementById("repository-count");
-    const overText = document.getElementById("over");
-    const repositoryCount = await fetchRepositoryCount();
+    try {
+      const response = await fetch(ORG_URL);
 
-    counter.innerText = repositoryCount;
+      if (!response.ok) {
+        throw new Error(`Github returned ${response.status}`);
+      }
 
-    overText.remove();
+      const organization = await response.json();
+      const counter = document.getElementById("repository-count");
+      const overText = document.getElementById("over");
+
+      if (Number.isInteger(organization.public_repos)) {
+        counter.textContent = organization.public_repos;
+        overText?.remove();
+      }
+    } catch (error) {
+      console.warn("Fetching repository count failed; using fallback", error);
+    }
   }
 });
